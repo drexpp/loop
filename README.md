@@ -174,7 +174,7 @@ A laptop running 60 experiments per hour beats a researcher running 3 experiment
 
 ## Examples
 
-- **[Titanic](/titanic/)** — binary classification, 891 rows. AUC 0.867 → 0.885 in 12 experiments.  
+- **[Titanic](/examples/titanic/)** — binary classification, 891 rows. AUC 0.867 → 0.885 in 12 experiments.  
   *(more examples coming)*
 
 -----

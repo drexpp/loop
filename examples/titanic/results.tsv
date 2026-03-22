@@ -1,0 +1,49 @@
+id	val_metric	status	description
+0	0.866731	baseline	Random Forest baseline, no changes
+1	0.864204	discarded	Extract Title from Name column
+2	0.864469	discarded	Pclass * Sex interaction
+3	0.874242	keep	RF max_depth=5
+4	0.868534	discarded	Titles + max_depth=5
+5	0.875129	keep	Age binning
+6	0.872022	discarded	Fare binning (qcut)
+7	0.871637	discarded	Simplified title grouping
+8	0.870072	discarded	Sex * AgeBin interaction
+9	0.877818	keep	Switch to XGBoost
+10	0.881658	keep	FamilySize and IsAlone
+11	0.884463	keep	Simplified Titles + XGBoost
+12	0.884791	keep	XGBoost hyperparameter tuning
+13	0.885167	keep	Pclass * AgeBin interaction
+14	0.873497	discarded	Pclass * Age (raw) interaction
+15	0.000000	crash	Sex * Pclass interaction (XGBoost) - missing Pclass_Age
+16	0.886128	keep	Sex * Pclass interaction (Corrected)
+17	0.000000	crash	FamilySize grouping (Solo, Small, Large) - missing Title/Age/Sex interactions
+18	0.887030	keep	FamilySize grouping (Corrected)
+19	0.887645	keep	Sex * FamilyGroup interaction
+20	0.881020	discarded	Ticket prefix extraction
+21	0.882601	discarded	Fare per person (Fare / FamilySize)
+22	0.887645	discarded	Log transformation of Fare
+23	0.888350	keep	XGBoost max_depth=4
+24	0.872922	discarded	5-bin Fare grouping
+25	0.886122	discarded	HasCabin indicator
+26	0.887881	discarded	Switch to LightGBM
+27	0.888350	discarded	Sex * IsElderly interaction
+28	0.888630	keep	IsMaster binary indicator
+29	0.891664	keep	Pclass * FamilyGroup interaction
+30	0.000000	crash	LogFarePerPerson - missing Pclass_Family
+31	0.889003	discarded	LogFarePerPerson - Corrected
+32	0.000000	crash	Title * Pclass interaction - missing Pclass_Family
+33	0.888611	discarded	Title * Pclass interaction - Corrected
+34	0.000000	crash	Sex * Embarked interaction - missing Pclass_Family
+35	0.888134	discarded	Sex * Embarked interaction - Corrected
+36	0.000000	crash	AgeBin * FamilyGroup interaction - missing Pclass_Family
+37	0.890355	discarded	AgeBin * FamilyGroup interaction - Corrected
+38	0.886067	discarded	XGBoost (n=400, lr=0.01)
+39	0.000000	crash	Pclass * IsAlone interaction - missing Pclass_Family
+40	0.890142	discarded	Pclass * IsAlone interaction - Corrected
+41	0.891664	discarded	IsZeroFare indicator
+42	0.888234	discarded	IsInfant indicator
+43	0.888529	discarded	XGBoost (depth=5, min_child_weight=3)
+44	0.890235	discarded	XGBoost (subsample=0.8, colsample=0.8)
+45	0.889749	discarded	Smart Age imputation (Pclass + Title)
+46	0.883116	discarded	TrueFarePerPerson (Ticket frequency ratio)
+47	0.887793	discarded	Ensemble (XGBoost + Random Forest)

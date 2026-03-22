@@ -84,12 +84,12 @@ def pipeline(
         return model.predict(X_v)
     ─────────────────────────────────────────────────────────────────────────
     """
-    from sklearn.linear_model import Ridge
+    from sklearn.ensemble import RandomForestRegressor
 
     X_tr = engineer_features(X_train)
     X_v  = engineer_features(X_val)
 
-    model = Ridge(random_state=42)
+    model = RandomForestRegressor(n_estimators=100, random_state=42)
     model.fit(X_tr, y_train)
     return model.predict(X_v)
 

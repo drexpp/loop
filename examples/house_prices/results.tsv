@@ -1,2 +1,4 @@
 id	val_metric	status	description
 0	-0.159835	baseline	Ridge regression, numeric features only
+1	-0.159835	discarded	Added TotalSF (collinear for Ridge)
+2	-0.148687	keep	Switched to RandomForestRegressor

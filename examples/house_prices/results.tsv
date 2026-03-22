@@ -1,0 +1,2 @@
+id	val_metric	status	description
+0	-0.159835	baseline	Ridge regression, numeric features only

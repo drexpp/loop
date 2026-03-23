@@ -23,3 +23,4 @@ id	val_metric	status	description
 21	-0.125681	discarded	Binary indicators for amenities (worse)
 22	-0.124394	discarded	XGB tuning (n2000, lr0.01, subsample0.7, worse)
 23	-0.127177	discarded	Label encode all strings (highly fragmented/worse)
+24	-0.124267	discarded	Smoothed Target Encoding (worse)

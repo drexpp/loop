@@ -11,3 +11,4 @@ id	val_metric	status	description
 9	-0.136153	keep	Switched to XGBRegressor
 10	-0.134515	keep	Target encode Neighborhood
 11	-0.131370	keep	Target encode 7 categoricals
+12	-0.129294	keep	TotalBathrooms + TotalPorchSF features

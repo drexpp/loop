@@ -50,6 +50,18 @@ def engineer_features(df: pd.DataFrame) -> pd.DataFrame:
         df['HouseAge'] = df['YrSold'] - df['YearBuilt']
         df['RemodAge'] = df['YrSold'] - df['YearRemodAdd']
 
+    # Add bathroom count
+    bath_cols = ['FullBath', 'HalfBath', 'BsmtFullBath', 'BsmtHalfBath']
+    if all(c in df.columns for c in bath_cols):
+        df['TotalBathrooms'] = (df['FullBath'].fillna(0) + df['BsmtFullBath'].fillna(0) 
+                                + 0.5 * df['HalfBath'].fillna(0) + 0.5 * df['BsmtHalfBath'].fillna(0))
+
+    # Total porch SF
+    porch_cols = ['OpenPorchSF', 'EnclosedPorch', '3SsnPorch', 'ScreenPorch', 'WoodDeckSF']
+    available_porch = [c for c in porch_cols if c in df.columns]
+    if available_porch:
+        df['TotalPorchSF'] = df[available_porch].fillna(0).sum(axis=1)
+
     # Select only numeric columns as a safe starting point
     numeric_cols = df.select_dtypes(include=[np.number]).columns.tolist()
 

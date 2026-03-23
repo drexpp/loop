@@ -44,6 +44,7 @@ def engineer_features(df: pd.DataFrame) -> pd.DataFrame:
     for col in qual_cols:
         if col in df.columns:
             df[col + '_num'] = df[col].fillna('None').map(qual_map).fillna(0)
+
             
     # Add age features
     if all(c in df.columns for c in ['YrSold', 'YearBuilt', 'YearRemodAdd']):
@@ -108,6 +109,12 @@ def pipeline(
     """
     from xgboost import XGBRegressor
 
+    # Filter outliers in training data (standard House Prices refinement)
+    if 'GrLivArea' in X_train.columns:
+        train_mask = X_train['GrLivArea'] < 4000
+        X_train = X_train[train_mask]
+        y_train = y_train[train_mask]
+
     X_tr = engineer_features(X_train)
     X_v  = engineer_features(X_val)
 
@@ -117,11 +124,14 @@ def pipeline(
                'LotConfig', 'GarageType', 'Exterior2nd', 'RoofStyle',
                'LotShape', 'LandContour', 'SaleType']
     global_mean = y_train.mean()
+    alpha = 10  # Smoothing parameter
     for col in te_cols:
         if col in X_train.columns:
-            means = X_train.assign(_y=y_train.values).groupby(col)['_y'].mean()
-            X_tr[col + '_te'] = X_train[col].map(means).fillna(global_mean)
-            X_v[col + '_te'] = X_val[col].map(means).fillna(global_mean)
+            stats = X_train.assign(_y=y_train.values).groupby(col)['_y'].agg(['mean', 'count'])
+            # Smoothed mean: (mean * count + global_mean * alpha) / (count + alpha)
+            smoothed = (stats['mean'] * stats['count'] + global_mean * alpha) / (stats['count'] + alpha)
+            X_tr[col + '_te'] = X_train[col].map(smoothed).fillna(global_mean)
+            X_v[col + '_te'] = X_val[col].map(smoothed).fillna(global_mean)
 
     model = XGBRegressor(
         n_estimators=800, learning_rate=0.03, max_depth=3,

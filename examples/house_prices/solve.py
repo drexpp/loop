@@ -33,19 +33,24 @@ def engineer_features(df: pd.DataFrame) -> pd.DataFrame:
     """
     df = df.copy()
 
+    # Add TotalSF feature (classic House Prices feature)
+    if all(c in df.columns for c in ['TotalBsmtSF', '1stFlrSF', '2ndFlrSF']):
+        df['TotalSF'] = df['TotalBsmtSF'].fillna(0) + df['1stFlrSF'].fillna(0) + df['2ndFlrSF'].fillna(0)
+
+    # Ordinal encoding for quality metrics
+    qual_map = {'Ex': 5, 'Gd': 4, 'TA': 3, 'Fa': 2, 'Po': 1, 'None': 0}
+    qual_cols = ['ExterQual', 'ExterCond', 'BsmtQual', 'BsmtCond', 'HeatingQC', 
+                 'KitchenQual', 'FireplaceQu', 'GarageQual', 'GarageCond']
+    for col in qual_cols:
+        if col in df.columns:
+            df[col + '_num'] = df[col].fillna('None').map(qual_map).fillna(0)
+
     # Select only numeric columns as a safe starting point
     numeric_cols = df.select_dtypes(include=[np.number]).columns.tolist()
 
     # Basic imputation — fill nulls with column median
     for col in numeric_cols:
         df[col] = df[col].fillna(df[col].median())
-
-    # TODO: the agent will add feature engineering here
-    # Examples of what the agent might add:
-    #   - Encode categorical columns
-    #   - Create interaction features
-    #   - Extract features from text/dates
-    #   - Bin continuous variables
 
     return df[numeric_cols]
 
@@ -84,12 +89,12 @@ def pipeline(
         return model.predict(X_v)
     ─────────────────────────────────────────────────────────────────────────
     """
-    from sklearn.ensemble import RandomForestRegressor
+    from sklearn.ensemble import HistGradientBoostingRegressor
 
     X_tr = engineer_features(X_train)
     X_v  = engineer_features(X_val)
 
-    model = RandomForestRegressor(n_estimators=100, random_state=42)
+    model = HistGradientBoostingRegressor(random_state=42)
     model.fit(X_tr, y_train)
     return model.predict(X_v)
 

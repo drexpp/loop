@@ -44,6 +44,11 @@ def engineer_features(df: pd.DataFrame) -> pd.DataFrame:
     for col in qual_cols:
         if col in df.columns:
             df[col + '_num'] = df[col].fillna('None').map(qual_map).fillna(0)
+            
+    # Add age features
+    if all(c in df.columns for c in ['YrSold', 'YearBuilt', 'YearRemodAdd']):
+        df['HouseAge'] = df['YrSold'] - df['YearBuilt']
+        df['RemodAge'] = df['YrSold'] - df['YearRemodAdd']
 
     # Select only numeric columns as a safe starting point
     numeric_cols = df.select_dtypes(include=[np.number]).columns.tolist()

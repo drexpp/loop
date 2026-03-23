@@ -3,3 +3,4 @@ id	val_metric	status	description
 1	-0.159835	discarded	Added TotalSF (collinear for Ridge)
 2	-0.148687	keep	Switched to RandomForestRegressor
 3	-0.144822	keep	Added ordinal quality encoding and TotalSF
+4	-0.139446	keep	Switched to HistGradientBoostingRegressor

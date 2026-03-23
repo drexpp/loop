@@ -175,6 +175,7 @@ A laptop running 60 experiments per hour beats a researcher running 3 experiment
 ## Examples
 
 - **[Titanic](/examples/titanic/)** — binary classification, 891 rows. AUC 0.867 → 0.885 in 12 experiments.  
+- **[House Prices](/examples/house_prices/)** — regression, 1460 rows. RMSE −0.160 → −0.123 in 24 experiments.
   *(more examples coming)*
 
 -----

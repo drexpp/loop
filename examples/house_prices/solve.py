@@ -99,12 +99,15 @@ def pipeline(
     X_tr = engineer_features(X_train)
     X_v  = engineer_features(X_val)
 
-    # Target encode Neighborhood (computed from train, applied to val)
-    if 'Neighborhood' in X_train.columns:
-        means = X_train.assign(_y=y_train.values).groupby('Neighborhood')['_y'].mean()
-        global_mean = y_train.mean()
-        X_tr['Neighborhood_te'] = X_train['Neighborhood'].map(means).fillna(global_mean)
-        X_v['Neighborhood_te'] = X_val['Neighborhood'].map(means).fillna(global_mean)
+    # Target encode key categoricals (computed from train, applied to val)
+    te_cols = ['Neighborhood', 'MSZoning', 'SaleCondition', 'Exterior1st', 
+               'Foundation', 'BldgType', 'HouseStyle']
+    global_mean = y_train.mean()
+    for col in te_cols:
+        if col in X_train.columns:
+            means = X_train.assign(_y=y_train.values).groupby(col)['_y'].mean()
+            X_tr[col + '_te'] = X_train[col].map(means).fillna(global_mean)
+            X_v[col + '_te'] = X_val[col].map(means).fillna(global_mean)
 
     model = XGBRegressor(
         n_estimators=300, learning_rate=0.1, max_depth=4,

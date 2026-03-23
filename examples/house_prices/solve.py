@@ -113,7 +113,9 @@ def pipeline(
 
     # Target encode key categoricals (computed from train, applied to val)
     te_cols = ['Neighborhood', 'MSZoning', 'SaleCondition', 'Exterior1st', 
-               'Foundation', 'BldgType', 'HouseStyle']
+               'Foundation', 'BldgType', 'HouseStyle', 'Condition1',
+               'LotConfig', 'GarageType', 'Exterior2nd', 'RoofStyle',
+               'LotShape', 'LandContour', 'SaleType']
     global_mean = y_train.mean()
     for col in te_cols:
         if col in X_train.columns:

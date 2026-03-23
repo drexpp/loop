@@ -94,12 +94,16 @@ def pipeline(
         return model.predict(X_v)
     ─────────────────────────────────────────────────────────────────────────
     """
-    from sklearn.ensemble import HistGradientBoostingRegressor
+    from xgboost import XGBRegressor
 
     X_tr = engineer_features(X_train)
     X_v  = engineer_features(X_val)
 
-    model = HistGradientBoostingRegressor(random_state=42)
+    model = XGBRegressor(
+        n_estimators=300, learning_rate=0.1, max_depth=4,
+        subsample=0.8, colsample_bytree=0.8,
+        random_state=42, verbosity=0
+    )
     model.fit(X_tr, y_train)
     return model.predict(X_v)
 

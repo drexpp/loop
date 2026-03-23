@@ -122,8 +122,9 @@ def pipeline(
             X_v[col + '_te'] = X_val[col].map(means).fillna(global_mean)
 
     model = XGBRegressor(
-        n_estimators=300, learning_rate=0.1, max_depth=4,
+        n_estimators=500, learning_rate=0.05, max_depth=4,
         subsample=0.8, colsample_bytree=0.8,
+        reg_alpha=0.1, reg_lambda=1.0,
         random_state=42, verbosity=0
     )
     model.fit(X_tr, y_train)

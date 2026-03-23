@@ -12,3 +12,4 @@ id	val_metric	status	description
 10	-0.134515	keep	Target encode Neighborhood
 11	-0.131370	keep	Target encode 7 categoricals
 12	-0.129294	keep	TotalBathrooms + TotalPorchSF features
+13	-0.128881	keep	XGB n_estimators=500 lr=0.05 reg_alpha=0.1
